@@ -32,18 +32,7 @@ const ImgLogo = styled.img`
   width: 50px;
 `;
 
-const Login = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const ImgSign = styled.img`
-  width: 32px;
-  margin-bottom: 3px;
-`;
-
-const BtnLogin = styled.button`
+const Login = styled.button`
   font-size: 16px;
   color: #fff;
   background-color: transparent;
@@ -58,8 +47,8 @@ export const NavBar = () => (
       <H1>MRDonald’s</H1>
     </Logo>
     <Login>
-      <ImgSign src={signImg} alt="icon: sign" />
-      <BtnLogin>войти</BtnLogin>
+      <img src={signImg} alt="войти" />
+      <p>войти</p>
     </Login>
   </NavBarStyled>
 );
