@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import trashImage from '../image/trash.svg';
+import trashImage from '../../image/trash.svg';
 
 const OrderItemsStyled = styled.li`
   display: flex;
@@ -29,11 +29,11 @@ const TrashButton = styled.button`
   background-size: cover;
 `;
 
-export const OrderListItem = () => (
+export const OrderListItem = ({ order }) => (
   <OrderItemsStyled>
-    <ItemName>JS Burger</ItemName>
+    <ItemName>{order.name}</ItemName>
     <span>2</span>
-    <ItemPrice>750 Р</ItemPrice>
+    <ItemPrice>{order.price.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</ItemPrice>
     <TrashButton />
   </OrderItemsStyled>
 );
