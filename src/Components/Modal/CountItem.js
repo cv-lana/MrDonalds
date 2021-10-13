@@ -9,6 +9,7 @@ const CountWrapper = styled.div`
 const CountInput = styled.input`
   width: 50px;
   font-size: 20px;
+  text-align: center;
 `;
 
 const ButtonCount = styled.button`

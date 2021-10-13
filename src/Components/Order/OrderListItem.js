@@ -6,6 +6,7 @@ import { formatCurrency } from '../Functions/secondaryFunction';
 
 const OrderItemsStyled = styled.li`
   display: flex;
+  flex-wrap: wrap;
   margin: 15px 0;
 `;
 
@@ -31,11 +32,24 @@ const TrashButton = styled.button`
   background-size: cover;
 `;
 
-export const OrderListItem = ({ order }) => (
-  <OrderItemsStyled>
-    <ItemName>{order.name}</ItemName>
-    <span>{order.count}</span>
-    <ItemPrice>{formatCurrency(totalPriceItems(order))}</ItemPrice>
-    <TrashButton />
-  </OrderItemsStyled>
-);
+const Toppings = styled.div`
+  width: 100%;
+  font-size: 14px;
+  color: #9a9a9a;
+`;
+
+export const OrderListItem = ({ order }) => {
+  const topping = order.topping.filter(item => item.checked)
+    .map(item => item.name)
+    .join(', ');
+
+  return (
+    <OrderItemsStyled>
+      <ItemName>{order.name}</ItemName>
+      <span>{order.count}</span>
+      <ItemPrice>{formatCurrency(totalPriceItems(order))}</ItemPrice>
+      <TrashButton />
+      {topping && <Toppings>Допы: {topping}</Toppings>}
+    </OrderItemsStyled>
+  )
+};
