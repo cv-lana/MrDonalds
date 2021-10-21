@@ -1,7 +1,5 @@
 import React from 'react';
-import { Wrap } from '../Style/Wrap';
-import { Label } from '../Style/Label';
-import { Checkbox } from '../Style/Checkbox';
+import { Wrap, Label, Checkbox } from '../Style/WrapIngredients';
 
 export function Toppings({ toppings, checkToppings }) {
   return (

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { ButtonCheckout } from '../Style/ButtonCheckout';
 import { OrderListItem } from './OrderListItem';
 import { totalPriceItems } from '../Functions/secondaryFunction';
 import { formatCurrency } from '../Functions/secondaryFunction';
-import { projection } from '../Functions/secondaryFunction';
-import { push, ref, set } from 'firebase/database';
+import { Context } from '../Functions/context';
+import { OrderTitle, Total, TotalPrice } from '../Style/WrapModal';
 
 const OrderStyled = styled.section`
   position: fixed;
@@ -20,59 +20,23 @@ const OrderStyled = styled.section`
   padding: 20px;
 `;
 
-const OrderTitle = styled.h2`
-  text-align: center;
-  text-transform: uppercase;
-  margin-bottom: 30px;
-`;
-
 const OrderContent = styled.div`
   flex-grow: 1;
 `;
 
 const OrderList = styled.ul``;
 
-const Total = styled.div`
-  display: flex;
-  margin-bottom: 30px;
-  & span:first-child {
-    flex-grow: 1;
-  }
-`;
-
-const TotalPrice = styled.span`
-  text-align: center;
-  min-width: 65px;
-  margin-left: 20px;
-`;
-
 const EmptyList = styled.p`
   text-align: center;
 `;
 
-const rulesData = {
-  name: ['name'],
-  price: ['price'],
-  count: ['count'],
-  topping: ['topping', arr => arr.filter(obj => obj.checked).map(obj => obj.name),
-    arr => arr.length ? arr : 'no topping'],
-  choice: ['choice', item => item ? item : 'no choice'],
-}
-
-export const Order = ({ orders, setOrders, setOpenItem, authentication, logIn, firebaseDatabase }) => {
-
-  const sendOrder = () => {
-    const dataBase = firebaseDatabase;
-    const orderListRef = ref(dataBase, 'orders');
-    const newOrderRef = push(orderListRef);
-    const newOrder = orders.map(projection(rulesData));
-    set(newOrderRef, {
-      nameClient: authentication.displayName,
-      email: authentication.email,
-      order: newOrder
-    });
-    setOrders([]);
-  }
+export const Order = () => {
+  const {
+    auth: { authentication, logIn },
+    openItem: { setOpenItem },
+    orders: { orders, setOrders },
+    orderConfirm: { setOpenOrderConfirm }
+  } = useContext(Context);
 
   const deleteItem = index => {
     const newOrders = orders.filter((item, i) => index !== i);
@@ -100,18 +64,21 @@ export const Order = ({ orders, setOrders, setOpenItem, authentication, logIn, f
           </OrderList> :
           <EmptyList>Список заказов пуст</EmptyList>}
       </OrderContent>
-      <Total>
-        <span>Итого</span>
-        <span>{totalCounter}</span>
-        <TotalPrice>{formatCurrency(total)}</TotalPrice>
-      </Total>
-      <ButtonCheckout onClick={() => {
-        if (authentication) {
-          sendOrder();
-        } else {
-          logIn();
-        }
-      }}>Оформить</ButtonCheckout>
+      {orders.length ?
+        <>
+          <Total>
+            <span>Итого</span>
+            <span>{totalCounter}</span>
+            <TotalPrice>{formatCurrency(total)}</TotalPrice>
+          </Total>
+          <ButtonCheckout onClick={() => {
+            if (authentication) {
+              setOpenOrderConfirm(true);
+            } else {
+              logIn();
+            }
+          }}>Оформить</ButtonCheckout>
+        </> : ''}
     </OrderStyled >
   )
 };
