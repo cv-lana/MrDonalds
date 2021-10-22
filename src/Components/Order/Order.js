@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { ButtonCheckout } from '../Style/ButtonCheckout';
 import { OrderListItem } from './OrderListItem';
-import { totalPriceItems } from '../Functions/secondaryFunction';
-import { formatCurrency } from '../Functions/secondaryFunction';
+import { totalPriceItems, formatCurrency } from '../Functions/secondaryFunction';
 import { Context } from '../Functions/context';
 import { OrderTitle, Total, TotalPrice } from '../Style/WrapModal';
 
@@ -33,7 +32,6 @@ const EmptyList = styled.p`
 export const Order = () => {
   const {
     auth: { authentication, logIn },
-    openItem: { setOpenItem },
     orders: { orders, setOrders },
     orderConfirm: { setOpenOrderConfirm }
   } = useContext(Context);
@@ -59,7 +57,6 @@ export const Order = () => {
                 order={order}
                 deleteItem={deleteItem}
                 index={index}
-                setOpenItem={setOpenItem}
               />)}
           </OrderList> :
           <EmptyList>Список заказов пуст</EmptyList>}
@@ -78,7 +75,7 @@ export const Order = () => {
               logIn();
             }
           }}>Оформить</ButtonCheckout>
-        </> : ''}
+        </> : null}
     </OrderStyled >
   )
 };

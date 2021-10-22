@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import { ButtonCheckout } from '../Style/ButtonCheckout';
 import { CountItem } from './CountItem';
 import { useCount } from '../Hooks/useCount';
-import { totalPriceItems } from '../Functions/secondaryFunction';
-import { formatCurrency } from '../Functions/secondaryFunction';
+import { totalPriceItems, formatCurrency } from '../Functions/secondaryFunction';
 import { Toppings } from './Toppings';
 import { Choices } from './Choices';
 import { useToppings } from '../Hooks/useToppings';
@@ -16,7 +15,8 @@ const Modal = styled.div`
   position: relative;
   background-color: #fff;
   width: 600px;
-  min-height: 500px;
+  max-height: 95vh;
+  overflow: auto;
 `;
 
 const Banner = styled.div`
@@ -48,7 +48,10 @@ const TotalPriceItem = styled.div`
 `;
 
 export const ModalItem = () => {
-  const { openItem: { openItem, setOpenItem }, orders: { orders, setOrders } } = useContext(Context);
+  const {
+    openItem: { openItem, setOpenItem },
+    orders: { orders, setOrders }
+  } = useContext(Context);
 
   const counter = useCount(openItem.count);
   const toppings = useToppings(openItem);

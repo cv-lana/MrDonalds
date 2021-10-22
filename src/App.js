@@ -37,13 +37,13 @@ function App() {
   useTitle(openItem.openItem);
 
   return (
-    <Context.Provider value={{ auth, openItem, orders, orderConfirm }}>
+    <Context.Provider value={{ auth, openItem, orders, orderConfirm, firebaseDatabase: getDatabase(firebaseApp) }}>
       <GlobalStyle />
       <NavBar />
       <Order />
       <Menu />
       {openItem.openItem && <ModalItem />}
-      {orderConfirm.openOrderConfirm && <OrderConfirm firebaseDatabase={getDatabase(firebaseApp)} />}
+      {orderConfirm.openOrderConfirm && <OrderConfirm />}
     </Context.Provider>
   );
 }
