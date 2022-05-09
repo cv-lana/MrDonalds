@@ -1,12 +1,13 @@
 # MRDonald's
 
-Приложение для заказа бургеров
+Приложение для заказа бургеров. Учебный проект на курсе по React.
 
 ### Технологии
 
 - React
-- Styled components
-- Firebase
+- React Hooks
+- Styled Components
+- Firebase (Authentication, Realtime Database)
 
 ### Ссылка для просмотра
 
